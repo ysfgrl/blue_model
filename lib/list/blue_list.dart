@@ -99,7 +99,7 @@ class BlueList<LType extends BaseModel> extends StatelessWidget{
                   maxHeight: 600,
                   minWidth: 500,
                 ),
-                child: this,
+                child: Card(child: this,),
               );
             },
           ),
@@ -158,6 +158,9 @@ class BlueList<LType extends BaseModel> extends StatelessWidget{
                         scrollDirection: scrollDirection,
                         scrollController: listBloc.scroll,
                         groupKey: groupKey,
+                        loadMore: () {
+                          listBloc.add(const ListNextPageEvent());
+                        },
                     );
                   }else if(sliverGridBuilder!= null && listState.viewType == ListViewType.sliverGrid){
                     return _BlueSliverBuilder(
@@ -186,6 +189,9 @@ class BlueList<LType extends BaseModel> extends StatelessWidget{
                       scrollDirection: scrollDirection,
                       scrollController: listBloc.scroll,
                       groupKey: groupKey,
+                      loadMore: () {
+                        listBloc.add(const ListNextPageEvent());
+                      },
                     );
                   }else if(sliverGridBuilder != null){
                     return _BlueSliverBuilder(
@@ -216,134 +222,6 @@ class BlueList<LType extends BaseModel> extends StatelessWidget{
           )
         ],
       ),
-    );
-  }
-
-  Widget _rows(BuildContext context, ListState<LType> listState){
-    if(listState.listState == ListBlocDataState.error){
-      return errorBuilder(listState.message!);
-    }else if(listState.listState != ListBlocDataState.loaded &&
-        listState.paginationType == ListPaginationType.pagination){
-      return loadingWidget;
-    }else if(listState.list.isEmpty){
-      return emptyWidget;
-    }
-
-    if(dataTableBuilder != null && listState.viewType == ListViewType.dataTable){
-      return _tableBuilder(context, listState);
-    }else if(listViewBuilder != null && listState.viewType == ListViewType.listView){
-      return _listViewBuilder(context, listState  );
-    }else if(sliverGridBuilder!= null && listState.viewType == ListViewType.sliverGrid){
-      return _sliverBuilder(context, listState);
-    }else if(dataTableBuilder != null){
-      return _tableBuilder(context, listState);
-    }else if(listViewBuilder != null){
-      return _listViewBuilder(context, listState);
-    }else if(sliverGridBuilder != null){
-      return _sliverBuilder(context, listState);
-    }
-    return const Center(child: Text("Not Found Builder"),);
-  }
-  Widget _tableBuilder(BuildContext context, ListState<LType> listState){
-    return LayoutBuilder(builder: (context, constraints) {
-      return SingleChildScrollView(
-        controller: listBloc.scroll,
-        child: Row(
-          children: [
-            Expanded(child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    minWidth: constraints.maxWidth
-                ),
-                child: DataTable(
-                  columns: _getColumn(listState.list.first),
-                  rows: [
-                    ...listState.list.map((e) {
-                      return dataTableBuilder!(e, listState.selected.contains(e));
-                    },),
-                  ],
-                ),
-              ),
-            )
-            )
-          ],
-        ),
-      );
-    },);
-  }
-  List<DataColumn> _getColumn(LType first){
-    if(columns != null) return columns!;
-    var firstRow = dataTableBuilder!(first,false);
-    var colum = <DataColumn>[];
-    for (int i = 0; i < firstRow.cells.length; i++) {
-      colum.add(DataColumn(label:Text("Column $i")));
-    }
-    return colum;
-  }
-  Widget _listViewBuilder(BuildContext context, ListState<LType> listState){
-    Map<dynamic,List<Widget>> groupList = {};
-    if(groups.isNotEmpty && groupKey != null){
-      groups.forEach((key, group) {
-        groupList[key] = [];
-        groupList[key]!.add(group);
-      },);
-    }else{
-      groupList[1] = [];
-      groupList[1]!.add(SizedBox());
-    }
-    int index = 0;
-    for (var item in listState.list) {
-      var key = groupKey == null? 1 : groupKey!(item);
-      groupList[key]?.add(listViewBuilder!(item, listState.selected.contains(item), index));
-      index++;
-    }
-    return ListView(
-      controller: listBloc.scroll,
-      scrollDirection: scrollDirection,
-      physics: const AlwaysScrollableScrollPhysics(),
-      children: [
-        ...groupList.values.expand((element) => element.length == 1 ?[]: element,),
-      ],
-    );
-  }
-  Widget _sliverBuilder(BuildContext context, ListState<LType> listState){
-    Map<dynamic,List<Widget>> groupList = {};
-    if(groups.isNotEmpty && groupKey != null){
-      groups.forEach((key, group) {
-        groupList[key] = [];
-        groupList[key]!.add(group);
-      },);
-    }else{
-      groupList[1] = [];
-      groupList[1]!.add(SizedBox());
-    }
-    int index = 0;
-    for (var item in listState.list) {
-      var key = groupKey == null? 1 : groupKey!(item);
-      groupList[key]?.add(sliverGridBuilder!(item, listState.selected.contains(item), index));
-      index++;
-    }
-
-    return CustomScrollView(
-      controller: listBloc.scroll,
-      physics: const AlwaysScrollableScrollPhysics(),
-      slivers: [
-        ...groupList.values.expand(
-              (element) => element.length == 1 ?[]: [
-                SliverToBoxAdapter(
-                  child: element.first,
-                ),
-                SliverGrid(
-                  gridDelegate: delegate?? const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 500,
-                      mainAxisExtent: 300
-                  ),
-                  delegate: SliverChildListDelegate(element.sublist(1)),
-                )
-              ],
-        ),
-      ],
     );
   }
 

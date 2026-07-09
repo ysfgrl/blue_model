@@ -44,6 +44,8 @@ class FormBuilderSelect<DType extends BaseModel,FType> extends StatelessWidget{
       child: FormBuilderField<FType>(
           key: inputKey,
           builder: (field) => InputDecorator(
+            isEmpty: false,
+            expands: true,
             decoration: decoration.copyWith(
                 contentPadding: const EdgeInsets.only(
                     left: 5,
@@ -66,7 +68,6 @@ class FormBuilderSelect<DType extends BaseModel,FType> extends StatelessWidget{
                   ],
                 ): null
             ),
-            expands: true,
             child: childBuilder(initialValue),
           ),
           onChanged: onChanged,

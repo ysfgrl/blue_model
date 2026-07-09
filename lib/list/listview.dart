@@ -8,6 +8,7 @@ class _BlueListViewBuilder<LType extends BaseModel> extends StatelessWidget{
   final Axis scrollDirection;
   final BlueListGroupSelect<LType>? groupKey;
   final ScrollController scrollController;
+  final VoidCallback loadMore;
   const _BlueListViewBuilder({
     super.key,
     required this.listState,
@@ -15,6 +16,7 @@ class _BlueListViewBuilder<LType extends BaseModel> extends StatelessWidget{
     required this.groups,
     required this.scrollDirection,
     required this.scrollController,
+    required this.loadMore,
     this.groupKey,
   });
   @override
@@ -25,9 +27,15 @@ class _BlueListViewBuilder<LType extends BaseModel> extends StatelessWidget{
         controller: scrollController,
         scrollDirection: scrollDirection,
         physics: const AlwaysScrollableScrollPhysics(),
-        children:listState.list.map((item) {
-          return listViewBuilder(item, listState.selected.contains(item), index++);
-        },).toList(),
+        children:[
+          ...listState.list.map((item) {
+            return listViewBuilder(item, listState.selected.contains(item), index++);
+          },),
+          if(listState.paginationType == ListPaginationType.infinity)
+          Center(
+            child: IconButton(onPressed: loadMore, icon: Icon(Icons.refresh)),
+          )
+        ],
       );
     }
 
@@ -53,6 +61,7 @@ class _BlueListViewBuilder<LType extends BaseModel> extends StatelessWidget{
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
         ...groupList.values.expand((element) => element.length == 1 ?[]: element,),
+
       ],
     );
   }

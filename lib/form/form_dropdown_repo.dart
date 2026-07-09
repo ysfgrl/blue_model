@@ -53,18 +53,63 @@ class FormBuilderDropDownRepo<SType extends BaseModel, VType> extends StatelessW
         if(!isExist && initialValue !=null) {
           items.add(DropdownMenuItem<VType>(child: Text("...."), value: initialValue,));
         }
+
         items.add(DropdownMenuItem<VType>(child: Text("Select...")));
 
         return FormBuilderDropdown<VType>(
           key: inputKey,
           name: name,
           items: items,
-          initialValue: initialValue,
+          initialValue:initialValue,
           onSaved: onSaved,
           onChanged: onChanged,
           decoration: decoration,
           validator: validator,
           autovalidateMode: autovalidateMode,
+        );
+      },
+    );
+  }
+
+}
+
+class FormBuilderDropDownRepo2<SType extends BaseModel> extends StatelessWidget{
+  final String name;
+  final InputDecoration decoration;
+  final void Function(SType?)? onSaved;
+  final void Function(SType?)? onChanged;
+  final DropdownMenuItem<SType> Function(SType) itemBuilder;
+  final ListBloc<SType> listBloc;
+  const FormBuilderDropDownRepo2({
+    super.key,
+    required this.name,
+    required this.itemBuilder,
+    this.decoration = const InputDecoration(),
+    this.onSaved,
+    this.onChanged,
+    required this.listBloc,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ListBloc<SType>, ListState<SType>>(
+      bloc: listBloc,
+      builder: (context, state) {
+        if(state.listState == ListBlocDataState.init){
+          listBloc.add(const ListGetListEvent());
+        }
+        if(state.listState != ListBlocDataState.loaded){
+          return const LinearProgressIndicator();
+        }
+        var items = state.list.map((e) => itemBuilder(e,),).toList();
+
+        items.add(DropdownMenuItem(child: Text("Select...")));
+        return FormBuilderDropdown<SType>(
+          name: name,
+          items: items,
+          initialValue:state.selected.firstOrNull,
+          onSaved: onSaved,
+          onChanged: onChanged,
+          decoration: decoration,
         );
       },
     );

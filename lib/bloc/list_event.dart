@@ -158,3 +158,9 @@ final class ListSetFilterModelEvent extends ListBlocEvent{
   @override
   List<Object?> get props => [key, value];
 }
+final class ListRemoveFilterEvent extends ListBlocEvent{
+  final String key;
+  const ListRemoveFilterEvent(this.key);
+  @override
+  List<Object?> get props => [key];
+}

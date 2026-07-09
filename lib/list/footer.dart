@@ -14,17 +14,18 @@ class _BlueListFooter<LType extends BaseModel> extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     if(listBloc.state.paginationType == ListPaginationType.infinity){
-      return SizedBox(
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(onPressed: () {
-              listBloc.add(const ListNextPageEvent());
-            }, icon: const Icon(Icons.refresh))
-          ],
-        ),
-      );
+      return const SizedBox();
+      // return SizedBox(
+      //   height: 50,
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       IconButton(onPressed: () {
+      //         listBloc.add(const ListNextPageEvent());
+      //       }, icon: const Icon(Icons.refresh))
+      //     ],
+      //   ),
+      // );
     }
     if (hideFooter) {
       return const SizedBox();

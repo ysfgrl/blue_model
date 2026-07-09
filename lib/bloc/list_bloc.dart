@@ -67,6 +67,7 @@ class ListBloc<LType extends BaseModel> extends Bloc<ListBlocEvent, ListState<LT
     on<ListSetFilterEvent>(_setFilterText);
     on<ListSearchValueEvent>(_setSearchValue);
     on<ListSetFilterModelEvent>(_setFilterModel);
+    on<ListRemoveFilterEvent>(_removeFilter);
     on<ListSetPaginationTypeEvent>(_setPaginationType);
     on<ListSetViewTypeEvent>(_setViewType);
     on<ListSetFilterPanelStatus>(_setFilterPanel);
@@ -323,7 +324,7 @@ class ListBloc<LType extends BaseModel> extends Bloc<ListBlocEvent, ListState<LT
         filters: newFilters,
         page: 1,
     ));
-    add(const ListGetListEvent());
+    add(const ListRefreshPageEvent());
   }
   void _setFilterText(ListSetFilterEvent event, Emitter<ListState<LType>> emitter) async{
     final newFilters = state.filters;
@@ -338,7 +339,7 @@ class ListBloc<LType extends BaseModel> extends Bloc<ListBlocEvent, ListState<LT
         filters: newFilters,
         page: 1
     ));
-    add(const ListGetListEvent());
+    add(const ListRefreshPageEvent());
   }
 
   void _setSearchValue(ListSearchValueEvent event, Emitter<ListState<LType>> emitter) async{
@@ -358,7 +359,7 @@ class ListBloc<LType extends BaseModel> extends Bloc<ListBlocEvent, ListState<LT
         filters: newFilters,
         page: 1
     ));
-    add(const ListGetListEvent());
+    add(const ListRefreshPageEvent());
   }
 
   void _setFilterModel(ListSetFilterModelEvent event, Emitter<ListState<LType>> emitter) async{
@@ -371,7 +372,20 @@ class ListBloc<LType extends BaseModel> extends Bloc<ListBlocEvent, ListState<LT
         filters: newFilters,
         page: 1
     ));
-    add(const ListGetListEvent());
+    add(const ListRefreshPageEvent());
+  }
+  void _removeFilter(ListRemoveFilterEvent event, Emitter<ListState<LType>> emitter) async{
+    final newFilters = state.filters;
+    if(!newFilters.containsKey(event.key)){
+      add(const ListRefreshPageEvent());
+      return;
+    }
+    newFilters.remove(event.key);
+    emitter(state.copyWidth(
+        filters: newFilters,
+        page: 1
+    ));
+    add(const ListRefreshPageEvent());
   }
 
 }
