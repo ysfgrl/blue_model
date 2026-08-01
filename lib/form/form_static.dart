@@ -20,13 +20,7 @@ class FormBuilderStatic<DType> extends StatelessWidget{
   Widget build(BuildContext context) {
     return FormBuilderField<DType>(
         builder: (field) => InputDecorator(
-          decoration: decoration.copyWith(
-            contentPadding: const EdgeInsets.only(
-                left: 5,
-                right: 5,
-                top: 10
-            ),
-          ),
+          decoration: decoration,
           child: child,
         ),
         initialValue: initialValue,

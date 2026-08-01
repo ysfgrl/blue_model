@@ -5,13 +5,12 @@ import '../model/factory.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'types.dart';
 
-final defaultDio = Dio();
 class TypedHttpClient extends HttpClient{
   const TypedHttpClient({
     required super.dio,
     super.baseUrl,
-    super.headers,
-    super.timeout,
+    super.connectTimeout,
+    super.interceptors
   });
   Future<RType?> typedReq<RType extends BaseModel>(String path, String method,{
     Map<String, dynamic>? bodyData,

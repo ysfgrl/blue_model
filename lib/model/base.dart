@@ -17,7 +17,6 @@ abstract class BaseModel{
   String toString() {
     return toJson().toString();
   }
-
   @override
   bool operator ==(Object other);
 

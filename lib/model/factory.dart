@@ -67,8 +67,6 @@ class ModelFactory{
     }
     return null;
   }
-
-
   static List<MListType> modelListFactory<MListType extends BaseModel>(List<dynamic> js) {
     List<MListType> result = [];
     for(var item in js){

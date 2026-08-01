@@ -18,6 +18,12 @@ final class ListGetListEvent extends ListBlocEvent{
   List<Object?> get props => [];
 }
 
+final class ListClearListEvent extends ListBlocEvent{
+  const ListClearListEvent();
+  @override
+  List<Object?> get props => [];
+}
+
 final class ListSetListEvent<ListType extends BaseModel> extends ListBlocEvent{
   final ListResponse<ListType> listResponse;
   const ListSetListEvent(this.listResponse);

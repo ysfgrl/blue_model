@@ -10,8 +10,8 @@ class BlueHttpClient extends TypedHttpClient{
   const BlueHttpClient({
     required super.dio,
     super.baseUrl,
-    super.headers,
-    super.timeout,
+    super.connectTimeout,
+    super.interceptors
   });
 
   Future<ResponseModel<RType>?> blueReq<RType extends BaseModel>(String path, String method,{

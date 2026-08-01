@@ -53,6 +53,7 @@ class ListBloc<LType extends BaseModel> extends Bloc<ListBlocEvent, ListState<LT
     searchController = TextEditingController();
     on<ListGetListEvent>(_getList);
     on<ListSetListEvent<LType>>(_setList);
+    on<ListClearListEvent>(_clearList);
     on<ListUpdateItemEvent<LType>>(_updateItem);
     on<ListUpdateIndexEvent>(_updateIndex);
     on<ListAppendListEvent<LType>>(_appendList);
@@ -228,6 +229,15 @@ class ListBloc<LType extends BaseModel> extends Bloc<ListBlocEvent, ListState<LT
       return;
     }
 
+  }
+  void _clearList(ListClearListEvent event, Emitter<ListState<LType>> emitter) async{
+    emitter(state.copyWidth(
+      list: [],
+      total: 0,
+      page: 1,
+      pageSize: state.pageSize,
+      listState: ListBlocDataState.init,
+    ));
   }
   void _setList(ListSetListEvent<LType> event, Emitter<ListState<LType>> emitter) async{
 

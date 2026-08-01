@@ -55,7 +55,7 @@ class _BlueListFooter<LType extends BaseModel> extends StatelessWidget{
                         const Text("Size:"),
                         const SizedBox(width: 10),
                         SizedBox(
-                          width: 70,
+                          width: 80,
                           height: 25,
                           child: DropdownButtonFormField<int>(
                               value: listState.pageSize,

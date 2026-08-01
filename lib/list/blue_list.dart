@@ -135,9 +135,14 @@ class BlueList<LType extends BaseModel> extends StatelessWidget{
                   }
                   if(listState.listState == ListBlocDataState.error){
                     return errorBuilder(listState.message!);
-                  }else if(listState.listState != ListBlocDataState.loaded &&
-                      listState.paginationType == ListPaginationType.pagination){
-                    return loadingWidget;
+                  }else if(listState.listState != ListBlocDataState.loaded){
+                    if(listState.paginationType == ListPaginationType.pagination){
+                      return loadingWidget;
+                    } if(listState.paginationType == ListPaginationType.infinity
+                    && listState.page == 1){
+                      return loadingWidget;
+                    }
+
                   }else if(listState.list.isEmpty){
                     return emptyWidget;
                   }

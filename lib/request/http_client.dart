@@ -4,14 +4,14 @@ import 'types.dart';
 
 class HttpClient{
   final String? baseUrl;
-  final Map<String, String>? headers;
   final Dio dio;
-  final Duration? timeout;
+  final Duration? connectTimeout;
+  final List<Interceptor> interceptors;
   const HttpClient({
     required this.dio,
-    this.headers,
     this.baseUrl,
-    this.timeout
+    this.connectTimeout,
+    this.interceptors = const []
   });
   Future<Response<String>> request(String path,String method,{
     Map<String, dynamic>? bodyData,
@@ -19,9 +19,7 @@ class HttpClient{
     FormData? formData,
     OnUploadProgressCallback? uploadProgress,
   }) async{
-    final margeOptions = <String, dynamic>{};
-    margeOptions.addAll(dio.options.headers);
-    margeOptions.addAll(headers?? {});
+    dio.interceptors.addAll(interceptors);
     return dio.request<String>(
         "${baseUrl??""}$path",
         data: bodyData??formData,
@@ -29,11 +27,9 @@ class HttpClient{
         onSendProgress: uploadProgress,
         options: Options(
           method: method,
-          headers: margeOptions,
           responseType: ResponseType.plain,
           maxRedirects: 0,
-          sendTimeout: timeout,
-          receiveTimeout: timeout,
+          connectTimeout: connectTimeout
         )
     );
   }
