@@ -8,6 +8,7 @@ export 'model/response.dart';
 export 'model/error.dart';
 export 'model/factory.dart';
 export 'model/filter.dart';
+export 'model/object_id.dart';
 
 export 'repository/repository.dart';
 
