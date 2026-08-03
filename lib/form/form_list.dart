@@ -1,6 +1,8 @@
 
-import 'package:blue_model/blue_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import '../widget/list/blue_list.dart';
+import '../model/base.dart';
 
 typedef FormBuilderListItemBuilder<MType extends BaseModel> =
 Widget  Function(MType item);

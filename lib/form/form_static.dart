@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 
 class FormBuilderStatic<DType> extends StatelessWidget{
-
   final DType initialValue;
   final String name;
   final Widget child;

@@ -1,5 +1,5 @@
 
-export 'list/blue_list.dart';
+export 'widget/list/blue_list.dart';
 
 export 'model/base.dart';
 export 'model/list_request.dart';
@@ -18,9 +18,9 @@ export 'request/blue_http_client.dart';
 export 'request/types.dart';
 export 'request/blob_request.dart';
 
-export 'bloc/model_bloc.dart';
-export 'bloc/upload_bloc.dart';
-export 'bloc/list_bloc.dart';
+export 'bloc/model/model_bloc.dart';
+export 'bloc/upload/upload_bloc.dart';
+export 'bloc/list/list_bloc.dart';
 
 export 'form/form_bool.dart';
 export 'form/form_bool_check.dart';
@@ -38,7 +38,7 @@ export 'form/form_username.dart';
 
 export 'errors.dart';
 
-export 'json_editor/blue_json_editor.dart';
+export 'widget/json_editor/blue_json_editor.dart';
 export 'package:community_material_icon/community_material_icon.dart';
 export 'package:form_builder_validators/form_builder_validators.dart';
 export 'package:flutter_form_builder/flutter_form_builder.dart';

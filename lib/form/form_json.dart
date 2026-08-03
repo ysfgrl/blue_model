@@ -1,7 +1,7 @@
 
 import 'package:blue_model/blue_model.dart';
 import 'package:flutter/material.dart';
-import '../json_editor/blue_json_editor.dart';
+import '../widget/json_editor/blue_json_editor.dart';
 
 final class FormBuilderJson extends StatelessWidget{
   final Map<String, dynamic> initialValue;

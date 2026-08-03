@@ -5,10 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
-import 'upload_bloc.dart';
-import '../model/base.dart';
-import '../repository/repository.dart';
-import '../model/error.dart';
+import '../upload/upload_bloc.dart';
+import '../../model/base.dart';
+import '../../repository/repository.dart';
+import '../../model/error.dart';
 part 'model_event.dart';
 part 'model_state.dart';
 

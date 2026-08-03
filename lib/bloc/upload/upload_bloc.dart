@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
-import '../repository/repository.dart';
+import '../../repository/repository.dart';
 part 'upload_state.dart';
 part 'upload_event.dart';
 

@@ -39,5 +39,4 @@ class FormBuilderDropDown<VType> extends FormBuilderDropdown<VType>{
     super.borderRadius,
     super.alignment = AlignmentDirectional.centerStart,
   });
-
 }

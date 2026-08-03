@@ -5,12 +5,12 @@ import 'package:blue_model/errors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../model/base.dart';
-import '../repository/repository.dart';
-import '../model/error.dart';
-import '../model/list_response.dart';
-import '../model/list_request.dart';
-import '../model/filter.dart';
+import '../../model/base.dart';
+import '../../repository/repository.dart';
+import '../../model/error.dart';
+import '../../model/list_response.dart';
+import '../../model/list_request.dart';
+import '../../model/filter.dart';
 part 'list_event.dart';
 part 'list_state.dart';
 
